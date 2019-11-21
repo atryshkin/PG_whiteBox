@@ -1,0 +1,9 @@
+Q,R,Z,LeftMouseClick -- Attacks
+
+Y -- swap between two handed and one handed weapon combat style
+
+G -- lock target
+
+Left Shift -- step back
+Left Shift + W/A/S/D -- rolling in current direction
+
