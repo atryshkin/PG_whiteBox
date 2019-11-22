@@ -1,5 +1,5 @@
 LeftMouseClick, RightMouseClick, R -- Attacks
-Q -- Parry
+R -- Parry
 
 Y -- swap between two handed and one handed weapon combat style
 WORKS ONLY IF WEAPON IS SWITCHABLE

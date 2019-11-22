@@ -8,6 +8,8 @@ namespace PieGame
     {
         public List<Action> actionSlots = new List<Action>();
 
+
+
         StateManager states;
 
         public void Init(StateManager st)
@@ -82,14 +84,14 @@ namespace PieGame
 
         public ActionInput GetActionInput(StateManager st)
         {
-            if (st.rb)
-                return ActionInput.rb_LeftClick;
-            if (st.rt)
-                return ActionInput.rt_Rkey;
-            if (st.lb)
-                return ActionInput.lb_Zkey;
-            if (st.lt)
+            if (st.mouse1)
                 return ActionInput.lt_RightClick;
+            if (st.mouse0)
+                return ActionInput.rb_LeftClick;
+            if (st.R)
+                return ActionInput.rt_Rkey;
+            if (st.Q)
+                return ActionInput.lb_Qkey;
 
             return ActionInput.rb_LeftClick;
         }
@@ -98,7 +100,7 @@ namespace PieGame
 
     public enum ActionInput
     {
-        rb_LeftClick,lb_Zkey,rt_Rkey,lt_RightClick
+        rb_LeftClick,lb_Qkey,rt_Rkey,lt_RightClick
     }
 
     [System.Serializable]

@@ -14,10 +14,7 @@ namespace PieGame
         /// </summary>
         bool runInput;
 
-        /// <summary>
-        /// Left mouse click
-        /// </summary>
-        bool rb_input;
+        bool e;
         /// <summary>
         /// X
         /// </summary>
@@ -25,7 +22,7 @@ namespace PieGame
         /// <summary>
         /// C
         /// </summary>
-        bool a;
+        bool c;
         /// <summary>
         /// Y
         /// </summary>
@@ -35,24 +32,34 @@ namespace PieGame
         /// </summary>
         bool b;
         /// <summary>
-        /// R key
+        /// R
         /// </summary>
-        bool rt_input;
+        bool r;
         /// <summary>
         /// Q key
         /// </summary>
-        bool lt_input;
+        bool q;
         /// <summary>
         /// Z key
         /// </summary>
-        bool lb_input;
+        bool z;
+        /// <summary>
+        /// F key
+        /// </summary>
+        bool f;
+
+        bool mouse0;
+        bool mouse1;
+        bool mouse2;
 
         bool toLeft;
         bool locking;
 
         float run_timer;
-        float rt_timer;
-        float lt_timer;
+        float m0_timer;
+        float m1_timer;
+        float m2_timer;
+        float y_timer;
 
         float delta;
 
@@ -63,11 +70,14 @@ namespace PieGame
                 k_c= KeyCode.C,
                 k_y= KeyCode.Y,
                 k_b= KeyCode.B,
-                k_r= KeyCode.R,
-                k_q= KeyCode.Mouse1,
-                k_z= KeyCode.Z,
-                k_g= KeyCode.G,
-                k_mouse0=KeyCode.Mouse0;
+                k_r = KeyCode.R,
+                k_f = KeyCode.F,
+                k_q = KeyCode.Q,
+                k_mouse2 = KeyCode.Mouse2,
+                k_z = KeyCode.Z,
+                k_g = KeyCode.G,
+                k_mouse1 = KeyCode.Mouse1,
+                k_mouse0 =KeyCode.Mouse0;
 
         // Use this for initialization
         void Start()
@@ -109,20 +119,41 @@ namespace PieGame
             vertical = Input.GetAxis("Vertical");
             horizontal = Input.GetAxis("Horizontal");
             runInput = Input.GetKey(k_run);
-            rt_input = Input.GetKey(k_r);
-            lt_input = Input.GetKey(k_q);
-            lb_input = Input.GetKey(k_z);
-            rb_input = Input.GetKey(k_mouse0);
-            a = Input.GetKey(k_c);
+            //rb_input = Input.GetKey(k_mouse0);
+            mouse0 = Input.GetKey(k_mouse0);
+            //locking = Input.GetKey(k_mouse2);
+            mouse1 = Input.GetKey(k_mouse1);
+            //rt_input = Input.GetKey(k_mouse2);
+            mouse2 = Input.GetKey(k_mouse2);
+            q = Input.GetKey(k_q);
+            z = Input.GetKey(k_z);
+            c = Input.GetKey(k_c);
             b = Input.GetKey(k_b);
             y = Input.GetKey(k_y);
             x = Input.GetKey(k_x);
+            r = Input.GetKey(k_r);
+            f = Input.GetKey(k_f);
 
-            locking = Input.GetKeyUp(k_g);
 
             if (runInput)
             {
                 run_timer += delta;
+            }
+            if (mouse0)
+            {
+                m0_timer += delta;
+            }
+            if (mouse1)
+            {
+                m1_timer += delta;
+            }
+            if (mouse2)
+            {
+                m2_timer += delta;
+            }
+            if (y)
+            {
+                y_timer += delta;
             }
         }
 
@@ -141,28 +172,16 @@ namespace PieGame
             float m = Mathf.Abs(horizontal) + Mathf.Abs(vertical);
             states.moveAmount = Mathf.Clamp01(m);
 
-            if (runInput && run_timer>0.5f)
+            if (WasThisKeyClick(mouse2, m2_timer))
             {
-                if (states.moveAmount > 0)
-                {
-                    states.run = true;
-                }
+                //click middle mouse
+                locking = true;
+                states.mouse2 = true;
             }
-
-            if(!runInput && run_timer > 0 && run_timer < .5f)
+            else
             {
-                states.rollInput = true;
-            }
-
-            states.rb = rb_input;
-            states.rt = rt_input;
-            states.lt = lt_input;
-            states.lb = lb_input;
-
-            if (y && states.inventoryManager.curWeapon.switchable)
-            {
-                states.isTwoHanded = !states.isTwoHanded;
-                states.HandleTwoHanded();
+                locking = false;
+                states.mouse2 = false;
             }
 
             if (locking)
@@ -172,17 +191,94 @@ namespace PieGame
                 {
                     states.lockOn = false;
                 }
+                if(states.lockOn)
+                    states.anim.SetBool("running", false);
 
                 camManager.lockonTarget = states.lockOnTarget;
                 states.lockOnTransform = states.lockOnTarget.targetLook;
                 camManager.lockon = !camManager.lockon;
             }
+
+            if (!locking)
+            {
+                if (runInput && run_timer > 0.5f)
+                {
+                    if (states.moveAmount > 0)
+                    {
+                        states.run = true;
+                    }
+                }
+            }
+
+            if(WasThisKeyClick(runInput, run_timer))
+            {
+                states.rollInput = true;
+            }
+
+
+            if (WasThisKeyClick(mouse1, m1_timer, .05f))
+            {
+                states.mouse1 = true;
+            }
+            else
+            {
+                states.mouse1 = false;
+            }
+
+            if (WasThisKeyClick(mouse0, m0_timer, .05f))
+            {
+                states.mouse0 = true;
+            }
+            else
+            {
+                states.mouse0 = false;
+            }
+
+            states.R = r;
+            states.Q = q;
+            states.E = e;
+            states.F = f;
+
+            if (!y && y_timer > 0 && y_timer < .5f)
+            {
+                if (states.inventoryManager.curWeapon.switchable)
+                {
+                    states.isTwoHanded = !states.isTwoHanded;
+                    states.HandleTwoHanded();
+                }
+            }
+
+        }
+
+        bool WasThisKeyClick(bool keyFlag, float keyTimer, float min=0f, float max=.5f)
+        {
+            bool r;
+
+            r = !keyFlag && keyTimer > min && keyTimer < max;
+
+            return r;
         }
 
         void ResetInputNStates()
         {
             if (!runInput)
                 run_timer = 0;
+            if (!mouse2)
+            {
+                m2_timer = 0;
+            }
+            if (!mouse0)
+            {
+                m0_timer = 0;
+            }
+            if (!mouse1)
+            {
+                m1_timer = 0;
+            }
+            if (!y)
+            {
+                y_timer = 0;
+            }
             if (states.rollInput)
                 states.rollInput = false;
             if (states.run)

@@ -14,7 +14,7 @@ namespace PieGame
         public float horizontal;
         public float moveAmount;
         public Vector3 moveDir;
-        public bool rt, rb, lt, lb;
+        public bool mouse0, mouse1, mouse2, R, Q,E,F;
         public bool rollInput;
 
         /// <summary>
@@ -136,6 +136,7 @@ namespace PieGame
             delta = d;
             DetectAction();
 
+            anim.SetBool("lockon", lockOn);
 
             if (inAction)
             {
@@ -203,7 +204,6 @@ namespace PieGame
             Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tR, delta * moveAmount * rotateSpeed);
             transform.rotation = targetRotation;
 
-            anim.SetBool("lockon", lockOn);
 
             if (lockOn)
             {
@@ -217,7 +217,7 @@ namespace PieGame
 
         public void DetectAction()
         {
-            if (!rb && !rt && !lt && !lb)
+            if (!mouse1 && !mouse0 && !Q && !R)
             {
                 return;
             }
@@ -308,7 +308,7 @@ namespace PieGame
 
         void HandleMovementAnimations()
         {
-            if(Mathf.Abs(horizontal)>0 || Mathf.Abs(vertical) > 0)
+            if((Mathf.Abs(horizontal)>0 || Mathf.Abs(vertical) > 0) && !lockOn)
             {
                 anim.SetBool("running", run);
             }
@@ -326,8 +326,8 @@ namespace PieGame
             float h = relativeDir.x;
             float v = relativeDir.z;
 
-            anim.SetFloat("vertical", v, .2f, delta);
-            anim.SetFloat("horizontal", h, .2f, delta);
+            anim.SetFloat("vertical", v, .25f, delta);
+            anim.SetFloat("horizontal", h, .25f, delta);
         }
 
         public bool OnGround()

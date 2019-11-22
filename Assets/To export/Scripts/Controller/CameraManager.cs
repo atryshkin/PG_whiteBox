@@ -89,22 +89,22 @@ namespace PieGame
             pivot.localRotation = Quaternion.Euler(tiltAngle, 0, 0);
 
 
-            if (lockon && lockonTarget!=null)
-            {
-                Vector3 targetDir = lockonTransform.position - transform.position;
-                targetDir.Normalize();
-                //targetDir.y = 0;
+            //if (lockon && lockonTarget!=null)
+            //{
+            //    Vector3 targetDir = lockonTransform.position - transform.position;
+            //    targetDir.Normalize();
+            //    //targetDir.y = 0;
 
-                if (targetDir == Vector3.zero)
-                {
-                    targetDir = transform.forward;
-                }
+            //    if (targetDir == Vector3.zero)
+            //    {
+            //        targetDir = transform.forward;
+            //    }
 
-                Quaternion targetRot = Quaternion.LookRotation(targetDir);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, d * 9);
-                lookAngle = transform.eulerAngles.y;
-                return;
-            }
+            //    Quaternion targetRot = Quaternion.LookRotation(targetDir);
+            //    transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, d * 9);
+            //    lookAngle = transform.eulerAngles.y;
+            //    return;
+            //}
 
             lookAngle += smoothX * targetSpeed;
             transform.rotation = Quaternion.Euler(0, lookAngle, 0);

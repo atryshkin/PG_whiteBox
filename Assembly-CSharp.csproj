@@ -51,6 +51,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Grenades\Scripts\Combat.cs" />
+     <Compile Include="Assets\Grenades\Scripts\Decal.cs" />
+     <Compile Include="Assets\Grenades\Scripts\DeferredDecalRenderer.cs" />
+     <Compile Include="Assets\Grenades\Scripts\GrenadeScript.cs" />
+     <Compile Include="Assets\Grenades\Scripts\GrenadeThrowingScript.cs" />
      <Compile Include="Assets\KeepBool.cs" />
      <Compile Include="Assets\To export\Scripts\Controller\ActionManager.cs" />
      <Compile Include="Assets\To export\Scripts\Controller\AnimatorHook.cs" />
@@ -60,6 +65,7 @@
      <Compile Include="Assets\To export\Scripts\Handlers\InputHandler.cs" />
      <Compile Include="Assets\To export\Scripts\Handlers\InventoryManager.cs" />
      <Compile Include="Assets\To export\Scripts\Handlers\StateManager.cs" />
+     <None Include="Assets\Grenades\Shaders\DecalShaderDiffuseOnly.shader" />
      <None Include="Assets\To export\Documentation\Key bindings.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
