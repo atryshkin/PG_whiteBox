@@ -64,6 +64,11 @@ namespace PieGame
         public Rigidbody rigid;
         [HideInInspector]
         public AnimatorHook a_hook;
+        [HideInInspector]
+        public ActionManager actionManager;
+        [HideInInspector]
+        public InventoryManager inventoryManager;
+
 
         float _actionDelay;
 
@@ -83,6 +88,12 @@ namespace PieGame
             rigid.angularDrag = 999;
             rigid.drag = 4;
             rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+
+            inventoryManager = GetComponent<InventoryManager>();
+            inventoryManager.Init();
+
+            actionManager = GetComponent<ActionManager>();
+            actionManager.Init(this);
 
             a_hook =  activeModel.AddComponent<AnimatorHook>();
             a_hook.Init(this);
@@ -212,20 +223,22 @@ namespace PieGame
             }
             string targetAnim="";
 
-            if (rb)
-                targetAnim = "Spear forward attack";
-            if (rt)
-                targetAnim = "Standing Melee Attack Horizontal";
-            if (lb)
-                targetAnim = "Standing Melee Attack 360 Low";
-            if (lt)
-                targetAnim = "Th Attack 1";
+            Action slot = actionManager.GetActionSlot(this);
+            if (slot == null)
+            {
+                return;
+            }
+
+            targetAnim = slot.targetAnim;
 
             if (string.IsNullOrEmpty(targetAnim))
                 return;
             inAction = true;
             canMove = false;
-            anim.CrossFade(targetAnim, .2f);
+            if (anim.GetCurrentAnimatorStateInfo(5).IsName(targetAnim) ||
+                anim.GetAnimatorTransitionInfo(5).IsName(targetAnim))
+                return;
+            anim.CrossFade(targetAnim, .04f);
         }
 
         public void Tick(float d)
@@ -344,6 +357,15 @@ namespace PieGame
         public void HandleTwoHanded()
         {
             anim.SetBool("Two handed", isTwoHanded);
+
+            if (isTwoHanded)
+            {
+                actionManager.UpdateActionsTwoHanded();
+            }
+            else
+            {
+                actionManager.UpdateActionsOneHanded();
+            }
         }
     }
 }

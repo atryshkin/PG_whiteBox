@@ -50,6 +50,10 @@ namespace PieGame
         bool toLeft;
         bool locking;
 
+        float run_timer;
+        float rt_timer;
+        float lt_timer;
+
         float delta;
 
         StateManager states;
@@ -60,7 +64,7 @@ namespace PieGame
                 k_y= KeyCode.Y,
                 k_b= KeyCode.B,
                 k_r= KeyCode.R,
-                k_q= KeyCode.Q,
+                k_q= KeyCode.Mouse1,
                 k_z= KeyCode.Z,
                 k_g= KeyCode.G,
                 k_mouse0=KeyCode.Mouse0;
@@ -81,9 +85,10 @@ namespace PieGame
             delta = Time.fixedDeltaTime;
             GetInput();
             UpdateStates();
-            states.FixedTick(delta);
 
+            states.FixedTick(delta);
             camManager.FixedTick(delta);
+
         }
 
         void Update()
@@ -91,6 +96,8 @@ namespace PieGame
             delta = Time.deltaTime;
 
             states.Tick(delta);
+
+            ResetInputNStates();
         }
 
 
@@ -101,17 +108,22 @@ namespace PieGame
         {
             vertical = Input.GetAxis("Vertical");
             horizontal = Input.GetAxis("Horizontal");
-            runInput = Input.GetKeyUp(k_run);
-            rt_input = Input.GetKeyUp(k_r);
-            lt_input = Input.GetKeyUp(k_q);
-            lb_input = Input.GetKeyUp(k_z);
-            rb_input = Input.GetKeyUp(k_mouse0);
-            a = Input.GetKeyUp(k_c);
-            b = Input.GetKeyUp(k_b);
-            y = Input.GetKeyUp(k_y);
-            x = Input.GetKeyUp(k_x);
+            runInput = Input.GetKey(k_run);
+            rt_input = Input.GetKey(k_r);
+            lt_input = Input.GetKey(k_q);
+            lb_input = Input.GetKey(k_z);
+            rb_input = Input.GetKey(k_mouse0);
+            a = Input.GetKey(k_c);
+            b = Input.GetKey(k_b);
+            y = Input.GetKey(k_y);
+            x = Input.GetKey(k_x);
 
             locking = Input.GetKeyUp(k_g);
+
+            if (runInput)
+            {
+                run_timer += delta;
+            }
         }
 
         /// <summary>
@@ -129,18 +141,17 @@ namespace PieGame
             float m = Mathf.Abs(horizontal) + Mathf.Abs(vertical);
             states.moveAmount = Mathf.Clamp01(m);
 
-            states.rollInput = runInput;
-
-            if (runInput)
+            if (runInput && run_timer>0.5f)
             {
-                //if (states.moveAmount>0)
-                //{
-                //    states.run=true;
-                //}
+                if (states.moveAmount > 0)
+                {
+                    states.run = true;
+                }
             }
-            else
+
+            if(!runInput && run_timer > 0 && run_timer < .5f)
             {
-                //states.run = false;
+                states.rollInput = true;
             }
 
             states.rb = rb_input;
@@ -148,7 +159,7 @@ namespace PieGame
             states.lt = lt_input;
             states.lb = lb_input;
 
-            if (y)
+            if (y && states.inventoryManager.curWeapon.switchable)
             {
                 states.isTwoHanded = !states.isTwoHanded;
                 states.HandleTwoHanded();
@@ -166,6 +177,16 @@ namespace PieGame
                 states.lockOnTransform = states.lockOnTarget.targetLook;
                 camManager.lockon = !camManager.lockon;
             }
+        }
+
+        void ResetInputNStates()
+        {
+            if (!runInput)
+                run_timer = 0;
+            if (states.rollInput)
+                states.rollInput = false;
+            if (states.run)
+                states.run = false;
         }
     }
 }

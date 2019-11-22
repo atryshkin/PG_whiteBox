@@ -51,36 +51,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Chaplenko\Camera\Scripts\Cam_Collision.cs" />
-     <Compile Include="Assets\Chaplenko\Camera\Scripts\Cam_Movement.cs" />
-     <Compile Include="Assets\Chaplenko\Combat\CombatManager.cs" />
-     <Compile Include="Assets\Chaplenko\Combat\Enemy finder\EnemyFinder.cs" />
-     <Compile Include="Assets\Chaplenko\Combat\Range Combat\Movement\RangeCombatMovement.cs" />
-     <Compile Include="Assets\Chaplenko\Hero statuses\Hero_Status_Controller.cs" />
-     <Compile Include="Assets\Chaplenko\IK\Fast ik\Scripts\FastIK\FastIKFabric.cs" />
-     <Compile Include="Assets\Chaplenko\IK\Fast ik\Scripts\FastIK\FastIKLook.cs" />
-     <Compile Include="Assets\Chaplenko\IK\Fast ik\Scripts\FastIK\IKCCD.cs" />
-     <Compile Include="Assets\Chaplenko\IK\Fast ik\Scripts\Sample\SampleProcedualAnimation.cs" />
-     <Compile Include="Assets\Chaplenko\IK\Fast ik\Scripts\Sample\SampleRotator.cs" />
-     <Compile Include="Assets\Chaplenko\IK\Fast ik\Scripts\Sample\SampleSinMover.cs" />
-     <Compile Include="Assets\Chaplenko\IK\Feet ik\FeetIK.cs" />
-     <Compile Include="Assets\Chaplenko\Movement\Player\FootIK.cs" />
-     <Compile Include="Assets\Chaplenko\Movement\Player\HandIK.cs" />
-     <Compile Include="Assets\Chaplenko\Movement\Player\HandsIK.cs" />
-     <Compile Include="Assets\Chaplenko\Movement\Player\PlayerMovementController.cs" />
-     <Compile Include="Assets\Chaplenko\Properties\Camera_props.cs" />
-     <Compile Include="Assets\Chaplenko\Properties\Character_status.cs" />
-     <Compile Include="Assets\Chaplenko\Properties\Player_props.cs" />
-     <Compile Include="Assets\Chaplenko\Properties\WeaponIKPos.cs" />
-     <Compile Include="Assets\Chaplenko\Weapon_shower.cs" />
      <Compile Include="Assets\KeepBool.cs" />
+     <Compile Include="Assets\To export\Scripts\Controller\ActionManager.cs" />
      <Compile Include="Assets\To export\Scripts\Controller\AnimatorHook.cs" />
      <Compile Include="Assets\To export\Scripts\Controller\CameraManager.cs" />
      <Compile Include="Assets\To export\Scripts\Controller\Helper.cs" />
      <Compile Include="Assets\To export\Scripts\Enemy\EnemyTarget.cs" />
      <Compile Include="Assets\To export\Scripts\Handlers\InputHandler.cs" />
+     <Compile Include="Assets\To export\Scripts\Handlers\InventoryManager.cs" />
      <Compile Include="Assets\To export\Scripts\Handlers\StateManager.cs" />
-     <None Include="Assets\Chaplenko\IK\Fast ik\Documentation.txt" />
      <None Include="Assets\To export\Documentation\Key bindings.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

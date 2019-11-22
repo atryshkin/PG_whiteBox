@@ -1,9 +1,14 @@
-Q,R,Z,LeftMouseClick -- Attacks
+LeftMouseClick, RightMouseClick, R -- Attacks
+Q -- Parry
 
 Y -- swap between two handed and one handed weapon combat style
+WORKS ONLY IF WEAPON IS SWITCHABLE
+(to make it so, you need to go to the Controller->Inventroy Manager->Cur Weapon->Switchable and 
+turn it on)
 
 G -- lock target
 
 Left Shift -- step back
+Left Shift(HOLD) -- running
 Left Shift + W/A/S/D -- rolling in current direction
 
