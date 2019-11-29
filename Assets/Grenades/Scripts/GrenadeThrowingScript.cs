@@ -74,7 +74,7 @@ public class GrenadeThrowingScript : MonoBehaviour {
     Vector3 GrenadeVelosity()
     {
         //Vector3.forward + 
-        Debug.Log(transform.rotation * new Vector3(0, 0, 1));
+        //Debug.Log(transform.rotation * new Vector3(0, 0, 1));
         return transform.rotation * new Vector3(0, 1, 1) * Force;
     }
 

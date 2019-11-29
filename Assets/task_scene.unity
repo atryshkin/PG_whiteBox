@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4366757, g: 0.48427194, b: 0.5645252, a: 1}
+  m_IndirectSpecularColor: {r: 0.43667555, g: 0.48427182, b: 0.56452405, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1113,9 +1113,9 @@ MonoBehaviour:
   spawn: {fileID: 780850363}
   predictedTrajectory: {fileID: 1735195643}
   intersectionPrefab: {fileID: 189830205}
-  forceChanging: 0
-  maxForce: 5
-  minForce: 5
+  forceChanging: 1
+  maxForce: 8
+  minForce: 3
   forceMultiply: 1
 --- !u!1 &1059717618
 GameObject:
