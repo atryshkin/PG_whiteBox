@@ -11,17 +11,20 @@ public class GrenadeThrowingScript : MonoBehaviour {
     public GameObject spawn;
     public LineRenderer predictedTrajectory;
     public GameObject intersectionPrefab;
-    [Range(1, 1000)]
-    public float forceMultiply = 1;
 
+    public bool forceChanging = false;
+    [HideInInspector]
     public float maxForce = 100f;
+    [HideInInspector]
     public float minForce = 1f;
+    [HideInInspector]
+    public float forceMultiply = 1;
     float force;
     GrenadeScript grenadeScript;
 
     public float Force
     {
-        get { return force; }
+        get { return forceChanging ? force : maxForce; }
         set { force = value > maxForce ? maxForce : value;  }
     }
     
@@ -61,7 +64,7 @@ public class GrenadeThrowingScript : MonoBehaviour {
 
     GameObject Throw()
     {
-        GameObject grenade = Instantiate(prefab, spawn.transform);
+        GameObject grenade = Instantiate(prefab, spawn.transform.position, spawn.transform.rotation);
         Rigidbody rigidbody = grenade.GetComponent<Rigidbody>();
         rigidbody.velocity = GrenadeVelosity();
 
@@ -70,7 +73,9 @@ public class GrenadeThrowingScript : MonoBehaviour {
 
     Vector3 GrenadeVelosity()
     {
-        return (Vector3.forward + Vector3.up) * Force;
+        //Vector3.forward + 
+        Debug.Log(transform.rotation * new Vector3(0, 0, 1));
+        return transform.rotation * new Vector3(0, 1, 1) * Force;
     }
 
     void PredictTrajectory()
